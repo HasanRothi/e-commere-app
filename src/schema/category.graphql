@@ -1,0 +1,20 @@
+type Category {
+  id: ID!
+  title: String!
+  active: Boolean!
+  parentCategory: Category
+  createdAt: String!
+  updatedAt: String!
+}
+
+input createCategoryInput {
+  title: String!
+  parentCategory: ID
+  active: Boolean
+}
+
+input updateCategoryInput {
+  title: String!
+  parentCategory: ID
+  active: Boolean
+}

@@ -1,0 +1,13 @@
+# import * from 'category.graphql'
+
+type Query {
+  helloWorld: String!
+  category(id: ID, first: Int , after: ID, search: String): [Category]
+}
+
+type Mutation {
+  createCategory(data: createCategoryInput): Category!
+  updateCategory(id: ID!, data: updateCategoryInput): Category!
+  deleteCategory(id: ID!): Category
+}
+
