@@ -1,6 +1,5 @@
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
-import cors from "cors";
 const { join } = require('path');
 import mongoose from 'mongoose';
 const { formatError } = require('apollo-errors');
@@ -45,8 +44,6 @@ const server = new ApolloServer({
     return response;
   },
 });
-
-// app.use("*", cors());
 mongoose.connect(`mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}/${process.env.MONGO_DATABASE}`)
   .then((success) => {
     console.log('Mongodb connected')
