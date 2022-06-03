@@ -1,3 +1,5 @@
+import { Model } from 'mongoose';
+
 const Redis = require('ioredis');
 
 let redis: any;
@@ -8,9 +10,7 @@ export async function RedisSetup() {
             port: process.env.REDIS_PORT,
             password: process.env.REDIS_PASSWORD,
             ...(process.env.REDIS_USER && { username: process.env.REDIS_USER }),
-            // username: 'default',
             ...(process.env.REDIS_DB && { db: process.env.REDIS_DB }),
-            // db: 0,
             showFriendlyErrorStack: true,
             lazyConnect: true,
             maxRetriesPerRequest: 0,
@@ -23,7 +23,7 @@ export async function RedisSetup() {
     }
 }
 
-export const cacheCheck = async (key: String, Model: any) => {
+export const cacheCheck = async <T>(key: String, Model: Model<T>) => {
     const value = await redis.get(key);
     if (value) {
         const parseData = await JSON.parse(value);
@@ -43,4 +43,4 @@ export const cacheInsert = async (key: String, value: any, time = 0) => {
 export const removeCache = async (key: string) => {
     await redis.del(key);
 };
-// module.exports = { cacheCheck, removeCache };
+// module.exports = { cacheCheck, cacheInsert, removeCache };

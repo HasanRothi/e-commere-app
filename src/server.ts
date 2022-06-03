@@ -37,7 +37,7 @@ const server = new ApolloServer({
     }),
     // ...[require('./authentication')],
   ),
-  // plugins: [BASIC_LOGGING],
+  // plugins: [BASIC_LOGGING], // for api log
   context: ({ req, res }) => {
     return { req, res };
   },

@@ -1,10 +1,10 @@
 import mongoose from "mongoose"
 import { cacheCheck, removeCache, cacheInsert } from '../cache/redis'
 
-export class CategoryService {
+export class CategoryService<T> {
     Category: any
 
-    constructor(Catgeory: any) {
+    constructor(Catgeory: mongoose.Model<T>) {
         this.Category = Catgeory
     }
 
