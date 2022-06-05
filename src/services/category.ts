@@ -35,6 +35,9 @@ export class CategoryService<T> {
             const todo = new this.Category(data)
             return await todo.save()
         } catch (error) {
+            if (error.code === 11000) {
+                throw new Error('Category already exist')
+            }
             throw new Error(error.message)
         }
     }
@@ -47,6 +50,9 @@ export class CategoryService<T> {
             }
             return res
         } catch (error) {
+            if (error.code === 11000) {
+                throw new Error('Category already exist')
+            }
             throw new Error(error.message)
         }
     }
