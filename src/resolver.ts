@@ -1,9 +1,9 @@
 import { IResolvers } from "graphql-tools";
 import { Category } from './models/catgeory'
 import { CategoryService } from './services/category'
-// const DataLoader = require('dataloader') -- implement for relationship for N+1 problem , though it's use redis cache.
-
+import { categoryDataLoader } from './dataLoader/category'
 const categoryService = new CategoryService(Category)
+
 const resolvers: IResolvers = {
   Query: {
     helloWorld: () => "Hello world from Apollo Server",
@@ -39,9 +39,14 @@ const resolvers: IResolvers = {
   Category: {
     parentCategory: async (parent, args, ctx, info) => {
       try {
-        // DataLoader for N+1
-        const pCat = await categoryService.get(parent.parentCategory)
-        return pCat[0]
+        // const pCat = await categoryService.get(parent.parentCategory)
+        // return pCat[0]
+        // DataLoader to solve N+1 problem
+        if (parent.parentCategory) {
+          return await categoryDataLoader.load(parent.parentCategory.toString())
+        } else {
+          return null
+        }
       } catch (error) {
         throw new Error(error.message)
       }
